@@ -18,15 +18,18 @@
 
   function create() {
     records.push({name, surname})
+    records = records
   }
 
   function update() {
     console.log(records, editing, name, surname)
     records[editing] = {name, surname}
+    records = records
   }
 
   function remove() {
     records.splice(editing, 1)
+    records = records
   }
 
   function setEditing(index) {

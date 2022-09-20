@@ -1,9 +1,7 @@
 <script>
-function formatDate(date) {
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
-}
+const formatDate = date => `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
 
-function isDateOk(date) {
+const validateDate = (date) => {
     const [day, month, year] = date.split('-')
     const currentYear = new Date().getFullYear()
     return day > 0 && day <= 31 &&
@@ -17,12 +15,12 @@ const oneWeekInMs = 7 * 24 * 3600000
 const nextWeek = new Date().getTime() + oneWeekInMs
 let returnDate = formatDate(new Date(nextWeek))
 
-let disableReturn = oneWayReturn === 'one-way'
+$: disableReturn = oneWayReturn === 'one-way'
 $: isBookingEnabled = oneWayReturn === 'one-way'
-    ? isDateOk(goDate)
-    : isDateOk(goDate) && isDateOk(returnDate)
+    ? validateDate(goDate)
+    : validateDate(goDate) && validateDate(returnDate)
 
-function handleBooking() {
+const handleBooking = () => {
     let message = `Booking ${oneWayReturn} ticket leaving on ${goDate}`
     if (oneWayReturn === 'return') {
         message += ` coming back on ${returnDate}`
@@ -41,11 +39,11 @@ function handleBooking() {
 
     <input
         bind:value={goDate}
-        class={isDateOk(goDate) ? '' : 'error'}
+        class={validateDate(goDate) ? '' : 'error'}
     /><br/>
     <input
-        disabled={oneWayReturn === 'one-way'}
-        class={isDateOk(returnDate) ? '' : 'error'}
+        disabled={disableReturn}
+        class={validateDate(returnDate) ? '' : 'error'}
         bind:value={returnDate}
     /><br/>
 

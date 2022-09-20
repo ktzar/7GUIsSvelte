@@ -1,29 +1,24 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
+
     let initialTime
     let handle
     let duration = 60
     let elapsed = 0
 
-    function tick() {
+    const tick = () => {
         elapsed = (new Date().getTime() - initialTime) / 1000
         if (elapsed > duration) {
             initialTime = new Date().getTime() - duration * 1000
         }
     }
 
-    function reset() {
-        initialTime = new Date().getTime()
-    }
+    const reset = () => { initialTime = new Date().getTime() }
 
-    onMount(() => {
-        reset()
-        handle = setInterval(tick, 100)
-    });
-
+    onMount(() => { reset(); handle = setInterval(tick, 100) });
     onDestroy(() => clearInterval(handle))
-
 </script>
+
 <h2>4: Timer</h2>
 
 <div>
@@ -34,7 +29,5 @@
 </div>
 
 <style>
-    div {
-        text-align: left;
-    }
+    div { text-align: left; }
 </style>

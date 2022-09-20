@@ -15,12 +15,12 @@
 
   function undo() {
     [undone] = circles.splice(circles.length-1, 1)
-    circles = [...circles]
+    circles = circles
   }
 
   function redo() {
     undone && circles.push(undone)
-    circles = [...circles]
+    circles = circles
   }
 
 </script>
